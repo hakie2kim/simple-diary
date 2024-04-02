@@ -7,8 +7,6 @@ const DiaryEditor = () => {
     content: "본문",
     emotion: 1,
   });
-  //   const [author, setAuthor] = useState("작가");
-  //   const [content, setContent] = useState("본문");
 
   const { onCreate } = useContext(DiaryStateContext);
 
@@ -23,7 +21,6 @@ const DiaryEditor = () => {
   const contentInput = useRef();
 
   const handleSubmit = (e) => {
-    // console.log(state);
     if (state.author.length < 1) {
       authorInput.current.focus();
       return;
@@ -56,7 +53,6 @@ const DiaryEditor = () => {
             setState({
               ...state,
               author: e.target.value,
-              //   content: state.content,
             });
           }}
         />
@@ -66,14 +62,6 @@ const DiaryEditor = () => {
           ref={contentInput}
           name="content"
           value={state.content}
-          //   onChange={(e) => {
-          //     setState({
-          //       //   author: state.author,
-          //       ...state,
-          //       content: e.target.value,
-          //     });
-          //   }}
-
           onChange={handleChangeState}
         />
       </div>
