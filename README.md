@@ -78,3 +78,54 @@
 
   - `useRef()`: DOM에서 어떤 요소를 선택하고 있는지 알게 함
   - `focus()`를 통해 조건을 만족하지 않을 경우 참조하는 요소로 커서를 이동
+
+- `Context API`를 통한 데이터 전역 공급
+
+  - `Context` 생성
+
+    ```javascript
+    export const DiaryStateContext = React.createContext();
+    ```
+
+  - `Context Provider`를 통한 데이터 공급
+
+    ```javascript
+    const onCreate = (author, content, emotion) => {
+      const created_time = new Date().getTime();
+      const newItem = {
+        id: dataId.current,
+        author,
+        content,
+        emotion,
+        created_time,
+      };
+
+      dataId.current += 1;
+      setData([newItem, ...data]);
+    };
+
+    const provider = { data, onCreate };
+
+    <DiaryStateContext.Provider value={provider}>
+      <DiaryEditor />
+      <div>전체 일기: {data.length}</div>
+      <div>기분 좋은 일기 개수: {goodCount}</div>
+      <div>기분 나쁜 일기 개수: {badCount}</div>
+      <div>기분 좋은 일기 비율: {goodRatio}</div>
+      <DiaryList onEdit={onEdit} onDelete={onDelete} />
+    </DiaryStateContext.Provider>;
+    ```
+
+- 리스트 렌더링
+
+  ```javascript
+  const { data: diaryList } = useContext(DiaryStateContext);
+
+  diaryList.map((item) => {
+    return (
+      <DiaryItem key={item.id} {...item} onEdit={onEdit} onDelete={onDelete} />
+    );
+  });
+  ```
+
+  - map을 통해 각 리스트의 값을 `DiaryItem` 컴포넌트로 전달

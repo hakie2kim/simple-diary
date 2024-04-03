@@ -3,7 +3,6 @@ import { DiaryStateContext } from "./App";
 import DiaryItem from "./DiaryItem";
 
 const DiaryList = ({ onEdit, onDelete }) => {
-  // console.log(diaryList);
   const { data: diaryList } = useContext(DiaryStateContext);
 
   return (
